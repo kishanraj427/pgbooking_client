@@ -21,47 +21,68 @@ class PgCard extends StatelessWidget {
         onTap: () {
           onTap();
         },
-        child: Card(
-            elevation: 2,
-            child: Padding(
-                padding: const EdgeInsets.all(8.0),
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 6),
+          child: Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Image.network(
                       imageurl,
                       fit: BoxFit.cover,
-                      width: double.maxFinite,
+                      width: MediaQuery.of(context).size.width * 0.9,
                       height: 120,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          height: 120,
+                          child: const Icon(
+                            Icons.image,
+                            size: 75,
+                          ),
+                        );
+                      },
                     ),
-                    const SizedBox(
-                      height: 9,
-                    ),
-                    Text(
-                      name,
-                      style: const TextStyle(fontSize: 16),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 9),
-                    Text(
-                      "$price",
-                      style: const TextStyle(fontSize: 16),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 4),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        adderess,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 12),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            name,
+                            style: const TextStyle(fontSize: 16),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 9),
+                          Text(
+                            "$price",
+                            style: const TextStyle(fontSize: 16),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 4),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              adderess,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 12),
+                            ),
+                          )
+                        ],
                       ),
                     )
                   ],
-                ))));
+                ),
+              )),
+        ));
   }
 }

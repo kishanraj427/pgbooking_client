@@ -35,13 +35,17 @@ class LoginController extends GetxController {
         return;
       }
       DocumentReference doc = userCollection.doc();
-      User user = User(
-          id: doc.id,
-          name: registerNamectrl.text,
-          email: registeremailctrl.text);
+      var user = {
+        "id": doc.id,
+        "name": registerNamectrl.text,
+        "email": registeremailctrl.text
+      };
       // ignore: unused_local_variable
-      final userJson = user.toJson();
+      final userJson = user;
       doc.set(user);
+      box.write('LoginUser', userJson);
+      loginemailctrl.clear();
+      Get.to(HomePage());
       Get.snackbar('success', 'user added succeccfully',
           colorText: Colors.green);
     } catch (e) {

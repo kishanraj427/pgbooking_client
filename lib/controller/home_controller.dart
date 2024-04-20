@@ -8,9 +8,9 @@ class HomeController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   late CollectionReference pgCollection;
   late CollectionReference categoryCollection;
-  RxString sortBy = 'Rs: Low to high'.obs;
-  RxString filerBycate = 'Women'.obs;
-  RxString filterByroom = '4Bed'.obs;
+  RxString sortBy = 'Low to high'.obs;
+  RxString roomType = '4 Bed'.obs;
+  RxString filerBycate = 'women'.obs;
   List<PG_details> pgdetail = [];
   List<PG_details> pgshowinUI = [];
 
@@ -63,20 +63,21 @@ class HomeController extends GetxController {
 
   filterByCategory(String category) {
     pgshowinUI.clear();
-    pgdetail =
-        pgdetail.where((pgDetails) => pgDetails.category == category).toList();
+    if (category != "All") {
+      pgshowinUI = pgdetail
+          .where((pgDetails) =>
+              pgDetails.category?.toLowerCase() == category.toLowerCase())
+          .toList();
+    } else
+      pgshowinUI.assignAll(pgdetail);
+
     update();
   }
 
-  filterByRoom(List<int> rooms) {
-    if (rooms.isEmpty) {
-      pgshowinUI = pgdetail;
-    } else {
-      // ignore: unused_local_variable
-      List<int> Room = rooms.map((room) => room).toList();
-      pgshowinUI =
-          pgdetail.where((pgDetails) => pgDetails.room == rooms).toList();
-    }
+  filterByRoom(String roomType) {
+    int room = int.parse(roomType[0]);
+    pgshowinUI.clear();
+    pgshowinUI = pgdetail.where((pgDetails) => pgDetails.room == room).toList();
     update();
   }
 

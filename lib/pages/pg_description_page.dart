@@ -23,13 +23,24 @@ class PgDescriptionPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        pgDetails.image ?? '',
-                        fit: BoxFit.contain,
-                        width: double.infinity,
-                        height: 200,
-                      )),
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network(
+                      pgDetails.image ?? "",
+                      fit: BoxFit.cover,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 200,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          height: 120,
+                          child: const Icon(
+                            Icons.image,
+                            size: 75,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                   const SizedBox(height: 20),
                   Text(
                     pgDetails.name ?? '',
@@ -46,7 +57,7 @@ class PgDescriptionPage extends StatelessWidget {
                   const SizedBox(height: 20),
                   Text(
                     'Rs : ${pgDetails.price ?? ''}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                       color: Colors.green,
                       fontWeight: FontWeight.bold,
